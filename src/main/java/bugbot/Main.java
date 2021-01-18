@@ -2,6 +2,7 @@ package bugbot;
 
 import bugbot.config.Config;
 import bugbot.listeners.BugHandler;
+import bugbot.listeners.CommandHandler;
 import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.utils.Compression;
 import net.dv8tion.jda.api.utils.cache.CacheFlag;
@@ -17,7 +18,7 @@ public class Main {
         builder.setBulkDeleteSplittingEnabled(false);
         builder.setCompression(Compression.NONE);
 
-        builder.addEventListeners(new BugHandler());
+        builder.addEventListeners(new BugHandler(), new CommandHandler());
         builder.build();
 
     }

@@ -14,6 +14,9 @@ public class BugHandler extends ListenerAdapter {
 
     @Override
     public void onMessageReceived(@NotNull MessageReceivedEvent event) {
+        if(event.getMessage().getContentRaw().startsWith("//"))
+            return;
+
         StringBuilder message = new StringBuilder();
 
         if(event.getTextChannel().getId().contains("771863258066845736"))
