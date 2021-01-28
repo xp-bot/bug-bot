@@ -33,8 +33,8 @@ public class BugHandler extends ListenerAdapter {
         try {
             GitHub github = new GitHubBuilder().withOAuthToken(Config.ACCESS_TOKEN,Config.ORG_NAME).build();
 
-            List<GHProject> prs = github.getRepository("namespace-media/calmY-XF").listProjects(GHProject.ProjectStateFilter.OPEN).toList();
-            List<GHProjectColumn> colms = prs.get(2).listColumns().toList();
+            List<GHProject> prs = github.getRepository("namespace-media/XP-JS").listProjects().toList();
+            List<GHProjectColumn> colms = prs.get(1).listColumns().toList();
             colms.get(0).createCard(
                      message.toString()
             );

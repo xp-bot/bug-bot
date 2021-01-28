@@ -1,9 +1,11 @@
 package bugbot;
 
 import bugbot.config.Config;
+import bugbot.listeners.AssignTicket;
 import bugbot.listeners.BugHandler;
 import bugbot.listeners.CommandHandler;
 import net.dv8tion.jda.api.JDABuilder;
+import net.dv8tion.jda.api.entities.Activity;
 import net.dv8tion.jda.api.utils.Compression;
 import net.dv8tion.jda.api.utils.cache.CacheFlag;
 
@@ -17,8 +19,9 @@ public class Main {
         builder.disableCache(CacheFlag.MEMBER_OVERRIDES);
         builder.setBulkDeleteSplittingEnabled(false);
         builder.setCompression(Compression.NONE);
+        builder.setActivity(Activity.watching("#get-help"));
 
-        builder.addEventListeners(new BugHandler(), new CommandHandler());
+        builder.addEventListeners(new BugHandler(), new CommandHandler(), new AssignTicket());
         builder.build();
 
     }
