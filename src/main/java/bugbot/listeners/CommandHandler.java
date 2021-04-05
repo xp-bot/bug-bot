@@ -1,15 +1,12 @@
 package bugbot.listeners;
 
 import net.dv8tion.jda.api.entities.GuildChannel;
-import net.dv8tion.jda.api.entities.Member;
-import net.dv8tion.jda.api.entities.User;
 import net.dv8tion.jda.api.events.channel.text.TextChannelCreateEvent;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
-import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
 public class CommandHandler extends ListenerAdapter {
@@ -23,7 +20,7 @@ public class CommandHandler extends ListenerAdapter {
             }
             event.getTextChannel().sendMessage("<:tickYes:792577321109422111> **Archive has been cleaned**").queue();
         }else if(event.getMessage().getContentRaw().startsWith("/close") && (event.getAuthor().getId().contains("265849018662387712") || event.getAuthor().getId().contains("524860237979582464"))) {
-            event.getTextChannel().sendMessage(event.getMessage().getMentionedMembers().get(0).getAsMention() + ", if you need further Support, please specify your Issue here. Otherwise, please close this Issue.").queue();
+            event.getTextChannel().sendMessage(event.getMessage().getMentionedMembers().get(0).getAsMention() + ", if you need further Support, please specify your Issue here. Otherwise, please close this Ticket.").queue();
             event.getMessage().delete().queue();
         }
     }
