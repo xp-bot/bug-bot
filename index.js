@@ -10,7 +10,7 @@ client.on('message', message => {
 	if (!message.member.roles.cache.has(supportRole)) return;
 	let prefix = `/`;
 
-	if(!message.content.startsWith(prefix)) return;
+	if (!message.content.startsWith(prefix)) return;
 
 	const args = message.content.slice(prefix.length).trim().split(/ +/);
 	const command = args.shift().toLowerCase();
@@ -23,6 +23,15 @@ client.on('message', message => {
 				message.channel.send(new Discord.MessageEmbed().setDescription(`Set ${mentioned}'s alias to **${args[1]}**.`));
 				fs.writeFileSync(`./aliases.json`, JSON.stringify(aliases));
 			}
+			break;
+		case `aliases`:
+			const embed = new Discord.MessageEmbed();
+			let msg = `\`\`\`md\n> Aliases\n`;
+			for (const property in aliases) {
+				message.guild.members.fetch();
+				msg += `- ${message.guild.members.cache.get(property).user.username} -> ${aliases[property]}\n`
+			}
+			message.channel.send(embed.setDescription(msg + `\`\`\``));
 			break;
 
 		case `delete`:
@@ -42,7 +51,7 @@ client.on('message', message => {
 			break;
 
 		default:
-			message.channel.send(new Discord.MessageEmbed().setDescription(`\`\`\`md\n${prefix}alias <member> <alias>\n${prefix}delete\n${prefix}close <member>\`\`\``).setTitle(`Usages`));
+			message.channel.send(new Discord.MessageEmbed().setDescription(`\`\`\`md\n${prefix}alias <member> <alias>\n${prefix}aliases\n${prefix}delete\n${prefix}close <member>\`\`\``).setTitle(`Usages`));
 			break;
 	}
 	// other commands...
@@ -50,7 +59,7 @@ client.on('message', message => {
 
 client.on('message', async (message) => {
 	if (message.author.bot) return;
-	if (!(message.channel.name.startsWith(`closed-`) && !isNaN(message.channel.name.slice(7).trim()))) return;
+	if (!(message.channel.name.startsWith(`ticket-`) && !isNaN(message.channel.name.slice(7).trim()))) return;
 	await message.member.fetch();
 	if (!message.member.roles.cache.has(supportRole)) return;
 	if (message.channel.type != `text`) return;
