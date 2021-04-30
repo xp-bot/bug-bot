@@ -5,6 +5,14 @@ const supportRole = `707246903003447357`;
 
 const client = new Discord.Client();
 
+process.on(`unhandledRejection`, (error, p) => {
+	if (error.message == `Missing Permissions`)
+	  return;
+	console.error(`=== UNHANDLED REJECTION [Shard: ${client.shard.ids[0]}]===`);
+	console.error(error.stack);
+	console.error(``);
+  });
+
 client.on('message', message => {
 	if (message.author.bot) return;
 	if (!message.member.roles.cache.has(supportRole)) return;
