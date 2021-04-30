@@ -7,11 +7,11 @@ const client = new Discord.Client();
 
 process.on(`unhandledRejection`, (error, p) => {
 	if (error.message == `Missing Permissions`)
-	  return;
+		return;
 	console.error(`=== UNHANDLED REJECTION [Shard: ${client.shard.ids[0]}]===`);
 	console.error(error.stack);
 	console.error(``);
-  });
+});
 
 client.on('message', message => {
 	if (message.author.bot) return;
@@ -54,8 +54,14 @@ client.on('message', message => {
 		case `close`:
 			if (args.length == 1 && message.mentions.members.array().length == 1) {
 				const mentioned = message.mentions.members.last();
+				message.delete();
 				message.channel.send(`Hey ${mentioned}, if you still need support please specify your problem here!\nOtherwise, we ask you to close this ticket above by pressing the lock and then the green tick to confirm.\n\nKind regards,\nyour XP Team`)
 			}
+			break;
+
+		case `reboot`:
+			message.react(`👋`).then(ye => process.exit());
+			
 			break;
 
 		default:
@@ -71,7 +77,7 @@ client.on('message', async (message) => {
 	await message.member.fetch();
 	if (!message.member.roles.cache.has(supportRole)) return;
 	if (message.channel.type != `text`) return;
-
+	
 	let title = message.channel.name;
 	if (aliases[message.member.id]) {
 		title += `-${aliases[message.member.id]}`
@@ -79,7 +85,12 @@ client.on('message', async (message) => {
 		title += `-${message.member.user.username}`
 	}
 	message.channel.setName(title);
-	message.channel.send(title);
+});
+
+client.on("channelCreate", function(channel){
+    if(!(channel.type == `text` && channel.name.startsWith(`ticket-`))) return;
+	channel.guild.roles.fetch();
+	channel.send(`<:staff:725039207172669461> Hey there,\nThank you for creating a Ticket.\n**Please already describe your Issue here and try to be as detailed as possible**.\n:coffee: ${channel.guild.roles.cache.get(`707246903003447357`)} has been notified, have a nice day!`)
 });
 
 client.login(`NzkzNjQ3OTM0MDg0MDg3ODA4.X-vUPA.ngTsAE48gRgy8blvyc7s2_5ITFE`);
