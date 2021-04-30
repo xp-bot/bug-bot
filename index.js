@@ -60,8 +60,8 @@ client.on('message', message => {
 			break;
 
 		case `reboot`:
-			message.react(`👋`).then(ye => process.exit());
-			
+			if (message.member.id == `265849018662387712` || message.member.id == `524860237979582464`)
+				message.react(`👋`).then(ye => process.exit());
 			break;
 
 		default:
@@ -77,7 +77,7 @@ client.on('message', async (message) => {
 	await message.member.fetch();
 	if (!message.member.roles.cache.has(supportRole)) return;
 	if (message.channel.type != `text`) return;
-	
+
 	let title = message.channel.name;
 	if (aliases[message.member.id]) {
 		title += `-${aliases[message.member.id]}`
@@ -87,8 +87,8 @@ client.on('message', async (message) => {
 	message.channel.setName(title);
 });
 
-client.on("channelCreate", function(channel){
-    if(!(channel.type == `text` && channel.name.startsWith(`ticket-`))) return;
+client.on("channelCreate", function (channel) {
+	if (!(channel.type == `text` && channel.name.startsWith(`ticket-`))) return;
 	channel.guild.roles.fetch();
 	channel.send(`<:staff:725039207172669461> Hey there,\nThank you for creating a Ticket.\n**Please already describe your Issue here and try to be as detailed as possible**.\n:coffee: ${channel.guild.roles.cache.get(`707246903003447357`)} has been notified, have a nice day!`)
 });
