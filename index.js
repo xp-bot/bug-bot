@@ -1,21 +1,25 @@
 const Discord = require('discord.js');
 const fs = require('fs');
-let aliases = require(`./aliases.json`)
-const supportRole = `707246903003447357`;
+let aliases = require(`./aliases.json`);
+const {
+	bugAssigner
+} = require('./bugAssigner');
+const Config = require(`./config.json`);
 
 const client = new Discord.Client();
+bugAssigner(client);
 
 process.on(`unhandledRejection`, (error, p) => {
 	if (error.message == `Missing Permissions`)
 		return;
-	console.error(`=== UNHANDLED REJECTION [Shard: ${client.shard.ids[0]}]===`);
+	console.error(`=== UNHANDLED REJECTION ===`);
 	console.error(error.stack);
 	console.error(``);
 });
 
 client.on('message', message => {
 	if (message.author.bot) return;
-	if (!message.member.roles.cache.has(supportRole)) return;
+	if (!message.member.roles.cache.has(Config.supportRole)) return;
 	let prefix = `/`;
 
 	if (!message.content.startsWith(prefix)) return;
@@ -64,7 +68,7 @@ client.on('message', message => {
 				message.react(`👋`).then(ye => process.exit());
 			break;
 
-		default:
+		case `help`:
 			message.channel.send(new Discord.MessageEmbed().setDescription(`\`\`\`md\n${prefix}alias <member> <alias>\n${prefix}aliases\n${prefix}delete\n${prefix}close <member>\`\`\``).setTitle(`Usages`));
 			break;
 	}
@@ -75,7 +79,7 @@ client.on('message', async (message) => {
 	if (message.author.bot) return;
 	if (!(message.channel.name.startsWith(`ticket-`) && !isNaN(message.channel.name.slice(7).trim()))) return;
 	await message.member.fetch();
-	if (!message.member.roles.cache.has(supportRole)) return;
+	if (!message.member.roles.cache.has(Config.supportRole)) return;
 	if (message.channel.type != `text`) return;
 
 	let title = message.channel.name;
@@ -93,4 +97,4 @@ client.on("channelCreate", function (channel) {
 	channel.send(`<:staff:725039207172669461> Hey there,\nThank you for creating a Ticket.\n**Please already describe your Issue here and try to be as detailed as possible**.\n:coffee: ${channel.guild.roles.cache.get(`707246903003447357`)} has been notified, have a nice day!`)
 });
 
-client.login(`NzkzNjQ3OTM0MDg0MDg3ODA4.X-vUPA.ngTsAE48gRgy8blvyc7s2_5ITFE`);
+client.login(Config.botToken);
