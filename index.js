@@ -1,13 +1,12 @@
 const Discord = require('discord.js');
 const fs = require('fs');
 let aliases = require(`./aliases.json`);
-const {
-	bugAssigner
-} = require('./bugAssigner');
+const BugAssigner = require('./BugAssigner').bugAssigner;
+const AutoSupport = require('./AutoSupport').autoSupport;
 const Config = require(`./config.json`);
 
 const client = new Discord.Client();
-bugAssigner(client);
+BugAssigner(client);
 
 process.on(`unhandledRejection`, (error, p) => {
 	if (error.message == `Missing Permissions`)
@@ -17,10 +16,10 @@ process.on(`unhandledRejection`, (error, p) => {
 	console.error(``);
 });
 
-client.on('message', message => {
+client.on('message', async message => {
 	if (message.author.bot) return;
 	if (!message.member.roles.cache.has(Config.supportRole)) return;
-	let prefix = `/`;
+	let prefix = `>`;
 
 	if (!message.content.startsWith(prefix)) return;
 
@@ -59,7 +58,8 @@ client.on('message', message => {
 			if (args.length == 1 && message.mentions.members.array().length == 1) {
 				const mentioned = message.mentions.members.last();
 				message.delete();
-				message.channel.send(`Hey ${mentioned}, if you still need support please specify your problem here!\nOtherwise, we ask you to close this ticket above by pressing the lock and then the green tick to confirm.\n\nKind regards,\nyour XP Team`)
+				await message.channel.send(`Hey ${mentioned}, if you still need support please specify your problem here!\nOtherwise, we ask you to close this ticket above by pressing :lock: and then :white_check_mark: to confirm.`)
+				message.channel.send(`https://img.namespace.media/images/2021/05/14/rPvMxvOEmz.gif`);
 			}
 			break;
 
@@ -77,6 +77,7 @@ client.on('message', message => {
 
 client.on('message', async (message) => {
 	if (message.author.bot) return;
+	AutoSupport(message);
 	if (!(message.channel.name.startsWith(`ticket-`) && !isNaN(message.channel.name.slice(7).trim()))) return;
 	await message.member.fetch();
 	if (!message.member.roles.cache.has(Config.supportRole)) return;
