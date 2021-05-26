@@ -14,13 +14,12 @@ function autoSupport(message) {
     const embed = new Discord.MessageEmbed();
     for (const problem of problems) {
         const content = message.content.toLowerCase().replace(/[\W_]+/g," ").split(` `);
-        console.log(`${problem.question} > 
-        1 - ${(problem.needed.every(item => content.includes(item)) || problem.needed.length == 0)} - 
-        2 - ${problem.keywords.some(item => content.includes(item))} - 
-        3 - ${problem.some.some(item => content.includes(item))}`);
+        // console.log(`${problem.question} > 
+        // 1 - ${(problem.needed.every(item => content.includes(item)) || problem.needed.length == 0)} - 
+        // 2 - ${problem.keywords.some(item => content.includes(item))} - 
+        // 3 - ${problem.some.some(item => content.includes(item))}`);
 
         if ((problem.needed.every(item => content.includes(item)) || problem.needed.length == 0) && problem.keywords.some(item => content.includes(item)) && problem.some.some(item => content.includes(item))) {
-            console.log(`here`);
             embed.setDescription(problem.answer)
                 .setTitle(problem.question)
                 .setColor(`#52D94F`)

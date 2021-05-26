@@ -19,7 +19,7 @@ process.on(`unhandledRejection`, (error, p) => {
 client.on('message', async message => {
 	if (message.author.bot) return;
 	if (!message.member.roles.cache.has(Config.supportRole)) return;
-	let prefix = `>`;
+	let prefix = `-`;
 
 	if (!message.content.startsWith(prefix)) return;
 
@@ -38,10 +38,11 @@ client.on('message', async message => {
 		case `aliases`:
 			const embed = new Discord.MessageEmbed();
 			let msg = `\`\`\`md\n> Aliases\n`;
+			const initMsg = await message.channel.send(`loading...`);
 			for (const property in aliases) {
-				message.guild.members.fetch();
-				msg += `- ${message.guild.members.cache.get(property).user.username} -> ${aliases[property]}\n`
+				msg += `- ${(await message.guild.members.fetch(property)).user.username.replace(/_/g, ``)} -> ${aliases[property]}\n`
 			}
+			initMsg.delete()
 			message.channel.send(embed.setDescription(msg + `\`\`\``));
 			break;
 
@@ -78,7 +79,7 @@ client.on('message', async message => {
 client.on('message', async (message) => {
 	if (message.author.bot) return;
 	// if (!message.member.roles.cache.has(Config.supportRole))
-		AutoSupport(message);
+	AutoSupport(message);
 
 	if (!(message.channel.name.startsWith(`ticket-`) && !isNaN(message.channel.name.slice(7).trim()))) return;
 	await message.member.fetch();
