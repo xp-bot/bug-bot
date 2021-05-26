@@ -78,7 +78,7 @@ client.on('message', async message => {
 
 client.on('message', async (message) => {
 	if (message.author.bot) return;
-	if (!message.member.roles.cache.has(Config.supportRole))
+	if (!message.member.roles.cache.has(Config.supportRole) && !(message.content.startsWith(`.xp `) || message.content.startsWith(`.c `) || message.content.startsWith(`.dp `)))
 		AutoSupport(message);
 
 	if (!(message.channel.name.startsWith(`ticket-`) && !isNaN(message.channel.name.slice(7).trim()))) return;
