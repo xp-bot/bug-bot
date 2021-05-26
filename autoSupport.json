@@ -21,7 +21,7 @@
     "keywords": ["module", "modules", "feature", "features", "autonick"],
     "some": ["enable", "disable", "prevent", "turn off", "turn on"],
     "question": "\"How do i change the state of a Module\"",
-    "answer": "XP is divided into a few easy to understand modules to turn functions on or off.\n\ne.g. the module \"MessageXP\" controls if members get XP by writing messages in the server, while the \"Autonick\" module controls if the levels of the users are displayed in their nicknames.\\n\\n**Customization**```md\n> List the current modules and settings\n.xp modules> Switch the setting of a module\n.xp module <module>```"
+    "answer": "XP is divided into a few easy to understand modules to turn functions on or off.\n\ne.g. the module \"MessageXP\" controls if members get XP by writing messages in the server, while the \"Autonick\" module controls if the levels of the users are displayed in their nicknames.\\n\\n**Customization**```md\n> List the current modules and settings\n.xp modules\n> Switch the setting of a module\n.xp module <module>```"
 }, {
     "needed": ["xp"],
     "keywords": ["give", "gift", "edit", "remove", "set"],
