@@ -12,6 +12,7 @@
     "@octokit/rest": "^18.5.3",
     "discord.js": "^12.5.3",
     "github-api": "^3.4.0",
-    "octonode": "^0.10.2"
+    "octonode": "^0.10.2",
+    "path": "^0.12.7"
   }
 }

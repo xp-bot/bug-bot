@@ -1,9 +1,13 @@
 const Discord = require('discord.js');
-const fs = require('fs');
-let aliases = require(`./aliases.json`);
+global.aliases = require(`./aliases.json`);
 const BugAssigner = require('./BugAssigner').bugAssigner;
 const AutoSupport = require('./AutoSupport').autoSupport;
+const TicketListeners = require('./listeners/TicketListeners');
+const commandsHandler = require('./listeners/CommandsListener').commandsHandler;
+const onReadyHandler = require('./listeners/OnReadyListener').onReadyHandler;
 const Config = require(`./config.json`);
+const SetupConfig = require('./setup.json');
+global.globalCommands = {};
 
 const client = new Discord.Client();
 BugAssigner(client);
@@ -16,89 +20,46 @@ process.on(`unhandledRejection`, (error, p) => {
 	console.error(``);
 });
 
-client.on('message', async message => {
-	if (message.author.bot) return;
-	if (!message.member.roles.cache.has(Config.supportRole)) return;
-	let prefix = `-`;
-
-	if (!message.content.startsWith(prefix)) return;
-
-	const args = message.content.slice(prefix.length).trim().split(/ +/);
-	const command = args.shift().toLowerCase();
-
-	switch (command) {
-		case `alias`:
-			if (args.length == 2 && message.mentions.members.array().length == 1) {
-				const mentioned = message.mentions.members.last();
-				aliases[mentioned.id] = args[1];
-				message.channel.send(new Discord.MessageEmbed().setDescription(`Set ${mentioned}'s alias to **${args[1]}**.`));
-				fs.writeFileSync(`./aliases.json`, JSON.stringify(aliases));
-			}
-			break;
-		case `aliases`:
-			const embed = new Discord.MessageEmbed();
-			let msg = `\`\`\`md\n> Aliases\n`;
-			const initMsg = await message.channel.send(`loading...`);
-			for (const property in aliases) {
-				msg += `- ${(await message.guild.members.fetch(property)).user.username.replace(/_/g, ``)} -> ${aliases[property]}\n`
-			}
-			initMsg.delete()
-			message.channel.send(embed.setDescription(msg + `\`\`\``));
-			break;
-
-		case `delete`:
-			message.guild.fetch();
-			const channels = message.guild.channels.cache.array();
-			channels.forEach(element => {
-				if (element.name.startsWith(`closed-`))
-					element.delete();
-			});
-			break;
-
-		case `close`:
-			if (args.length == 1 && message.mentions.members.array().length == 1) {
-				const mentioned = message.mentions.members.last();
-				message.delete();
-				await message.channel.send(`Hey ${mentioned}, if you still need support please specify your problem here!\nOtherwise, we ask you to close this ticket above by pressing :lock: and then :white_check_mark: to confirm.`)
-				message.channel.send(`https://img.namespace.media/images/2021/05/14/rPvMxvOEmz.gif`);
-			}
-			break;
-
-		case `reboot`:
-			if (message.member.id == `265849018662387712` || message.member.id == `524860237979582464`)
-				message.react(`👋`).then(ye => process.exit());
-			break;
-
-		case `help`:
-			message.channel.send(new Discord.MessageEmbed().setDescription(`\`\`\`md\n${prefix}alias <member> <alias>\n${prefix}aliases\n${prefix}delete\n${prefix}close <member>\`\`\``).setTitle(`Usages`));
-			break;
-	}
-	// other commands...
+client.on("ready", async () => {
+	onReadyHandler();
 });
 
 client.on('message', async (message) => {
+	if (message.type === "PINS_ADD" && message.author.id == client.user.id) {
+		message.delete();
+		return;
+	}
 	if (message.author.bot) return;
+	commandsHandler(message);
+	TicketListeners.assignHandler(message);
+});
+
+client.on('messageReactionAdd', async (reaction, user) => {
+	if (user.bot) return;
+	TicketListeners.ticketBeginHandler(reaction, user);
+	TicketListeners.closeTicketHanlder(reaction, user);
+});
+
+client.on('message', async (message) => {
 	if (!message.member.roles.cache.has(Config.supportRole) && !(message.content.startsWith(`.xp `) || message.content.startsWith(`.c `) || message.content.startsWith(`.dp `)))
 		AutoSupport(message);
-
-	if (!(message.channel.name.startsWith(`ticket-`) && !isNaN(message.channel.name.slice(7).trim()))) return;
-	await message.member.fetch();
-	if (!message.member.roles.cache.has(Config.supportRole)) return;
-	if (message.channel.type != `text`) return;
-
-	let title = message.channel.name;
-	if (aliases[message.member.id]) {
-		title += `-${aliases[message.member.id]}`
-	} else {
-		title += `-${message.member.user.username}`
-	}
-	message.channel.setName(title);
 });
 
-client.on("channelCreate", function (channel) {
-	if (!(channel.type == `text` && channel.name.startsWith(`ticket-`))) return;
-	channel.guild.roles.fetch();
-	channel.send(`<:staff:725039207172669461> Hey there,\nThank you for creating a Ticket.\n**Please already describe your Issue here and try to be as detailed as possible**.\n:coffee: ${channel.guild.roles.cache.get(`707246903003447357`)} has been notified, have a nice day!`)
+client.on('raw', packet => {
+	if (!['MESSAGE_REACTION_ADD'].includes(packet.t)) return;
+	const channel = client.channels.cache.get(packet.d.channel_id);
+	if (channel.messages.cache.has(packet.d.message_id)) return;
+	channel.messages.fetch(packet.d.message_id).then(message => {
+		// const emoji = packet.d.emoji.id ? `${packet.d.emoji.name}:${packet.d.emoji.id}` : packet.d.emoji.name;
+		let emoji = packet.d.emoji.id;
+		emoji ??= packet.d.emoji.name;
+		const reaction = message.reactions.cache.get(emoji);
+		if (reaction) reaction.users.cache.set(packet.d.user_id, client.users.cache.get(packet.d.user_id));
+		if (packet.t === 'MESSAGE_REACTION_ADD') {
+			client.emit('messageReactionAdd', reaction, client.users.cache.get(packet.d.user_id));
+		}
+	});
 });
 
-client.login(Config.botToken);
+// client.login(Config.botToken);
+client.login(`NzIxODg3OTc3ODM5NTI1OTc5.XubEkQ.QrRcneyOy6bQBxyzR4PRT68zk9Q`);

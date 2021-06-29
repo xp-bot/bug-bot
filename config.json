@@ -1,6 +1,7 @@
 {
     "botToken": "NzkzNjQ3OTM0MDg0MDg3ODA4.X-vUPA.ngTsAE48gRgy8blvyc7s2_5ITFE",
     "supportRole": "707246903003447357",
+    "devRolle": "707244509913677965",
     "channels": {
         "suggestions": {
             "channel": "707243949672235058",
@@ -14,5 +15,6 @@
             "channel": "771863258066845736",
             "column": 12709996
         }
-    }
+    },
+    "prefix": "!"
 }
