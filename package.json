@@ -10,7 +10,9 @@
   "license": "ISC",
   "dependencies": {
     "@octokit/rest": "^18.5.3",
+    "discord-slash-commands-client": "^1.2.1",
     "discord.js": "^12.5.3",
+    "djs-slash-commands": "^2.3.1",
     "github-api": "^3.4.0",
     "octonode": "^0.10.2",
     "path": "^0.12.7"

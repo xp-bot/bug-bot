@@ -49,22 +49,27 @@ async function bugAssigner(client) {
         const obj = {
             note: ""
         };
+
+        let id = ``;
         switch (reaction.message.channel.id) {
             case Config.channels.bugreports.channel:
                 obj.column_id = Config.channels.bugreports.column;
+                id = `BugID: \`ba-${randomIntFromInterval(10000, 99999)}\``;
                 break;
             case Config.channels.suggestions.channel:
                 obj.column_id = Config.channels.suggestions.column;
+                id = `Sugg.ID: \`sa-${randomIntFromInterval(10000, 99999)}\``;
                 break;
             case Config.channels.canarybugreports.channel:
                 obj.column_id = Config.channels.canarybugreports.column;
+                id = `BugID: \`cba-${randomIntFromInterval(10000, 99999)}\``;
                 obj.note = `*> CANARY <*`
                 break;
             default:
                 return;
         }
 
-        obj.note += `*Creator: ${reaction.message.author.username}#${reaction.message.author.discriminator}*\n\n${reaction.message.content}`;
+        obj.note += `*Creator: ${reaction.message.author.username}#${reaction.message.author.discriminator}*\n*${id}*\n\n${reaction.message.content}`;
         octokit.rest.projects.createCard(obj);
 
         checkedMessages.push(reaction.message.id)
@@ -72,3 +77,8 @@ async function bugAssigner(client) {
         reaction.message.reactions.removeAll().then(msg => msg.react(`792577321109422111`));
     });
 }
+
+function randomIntFromInterval(min, max) { // min and max included 
+    return Math.floor(Math.random() * (max - min + 1) + min)
+  }
+  

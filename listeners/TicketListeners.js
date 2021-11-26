@@ -34,7 +34,8 @@ module.exports.ticketBeginHandler = (reaction, user) => {
                 }]
             }).then(async (channel) => {
                 // channel.send()
-                const emb = await channel.send(`Welcome ${user}`, new Discord.MessageEmbed().setTitle(`Thank you for creating a Ticket`).setDescription(`\nSupport will be with you shortly.\n**Please use this time to describe your issue as detailed as possible.**\n\nHave a nice day! <:xpfeaturesmith:851213538440904755>`).setFooter(`React with 🔒 to close the ticket.`).setColor(`#52D94F`));
+                // await channel.send(new Discord.MessageEmbed().setTitle(`Vacation Notice`).setDescription(`**The main development team is currently on vacation.\n\nTickets will probably be answered later than usual and bugs will not be fixed until July 15 at the earliest.**\n\nThank you for your understanding!`).setColor(`#52D94F`));
+                const emb = await channel.send(`Welcome ${user} | <@&${Config.supportRole}>`, new Discord.MessageEmbed().setTitle(`Thank you for creating a Ticket`).setDescription(`\nSupport will be with you shortly.\n**Please use this time to describe your issue as detailed as possible.**\n\nHave a nice day! <:xpfeaturesmith:851213538440904755>`).setFooter(`React with 🔒 to close the ticket.`).setColor(`#52D94F`));
                 emb.react(`🔒`);
             });
             break;

@@ -1,5 +1,6 @@
 const Discord = require(`discord.js`);
 const Config = require(`../config.json`);
+const djssc = require("djs-slash-commands");
 
 const name = `embed`;
 const usage = ``;
