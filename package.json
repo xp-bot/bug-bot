@@ -1,20 +1,23 @@
 {
-  "name": "xp-bugbot2",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "name": "bugbot",
+  "version": "2.0.0",
+  "description": "Bug Bot rewrite in TypeScript",
+  "main": "src/index.ts",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "ts-node src/index.ts"
   },
-  "author": "",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/xp-bot/BugBot.git"
+  },
+  "author": "angelsflyinhell",
   "license": "ISC",
-  "dependencies": {
-    "@octokit/rest": "^18.5.3",
-    "discord-slash-commands-client": "^1.2.1",
-    "discord.js": "^12.5.3",
-    "djs-slash-commands": "^2.3.1",
-    "github-api": "^3.4.0",
-    "octonode": "^0.10.2",
-    "path": "^0.12.7"
+  "bugs": {
+    "url": "https://github.com/xp-bot/BugBot/issues"
+  },
+  "homepage": "https://github.com/xp-bot/BugBot#readme",
+  "devDependencies": {
+    "ts-node": "^10.4.0"
   }
 }
