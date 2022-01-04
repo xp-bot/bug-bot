@@ -1,0 +1,28 @@
+{
+  "token": "OTE3NDMxOTQxNDQ2MzgxNTc4.Ya4nEw.mJBpJKnmbBGgcbD8lzOyVy_Q2w8",
+  "devRole": "",
+  "supportRole": "",
+  "prefix": "?",
+  "channels": {
+    "suggestions": {
+      "channel": "",
+      "column": 0
+    },
+    "bugreports": {
+      "channel": "",
+      "column": 0
+    }
+  },
+  "ticketing": {
+    "startId": "",
+    "category": "",
+    "archive": "",
+    "count": 0
+  },
+  "checkedMessages": [
+    "",
+    "",
+    ""
+  ],
+  "autoSupport": []
+}
