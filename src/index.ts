@@ -3,6 +3,7 @@ import config from './config.json';
 import { handleReaction } from './listeners/ReactionListener';
 import { assignTicket } from './systems/TicketHandler';
 import { initSubmission } from './systems/SubmissionHandler';
+import { handleCommand } from './listeners/CommandListener';
 
 const client = new Client({
   intents: [
@@ -27,4 +28,5 @@ client.on('messageCreate', (message: Message) => {
   if (message.member?.user.bot) return;
   assignTicket(message).then(() => {});
   initSubmission(message).then(() => {});
+  handleCommand(message);
 });

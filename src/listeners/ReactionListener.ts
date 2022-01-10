@@ -6,7 +6,11 @@ import {
 } from 'discord.js';
 import localSave from '../localsave.json';
 import { closeTicket, openTicket } from '../systems/TicketHandler';
-import { acceptBug, acceptSuggestion, denySubmission } from "../systems/SubmissionHandler";
+import {
+  acceptBug,
+  acceptSuggestion,
+  denySubmission
+} from '../systems/SubmissionHandler';
 
 export const handleReaction = (
   reaction: MessageReaction | PartialMessageReaction,
@@ -31,7 +35,7 @@ export const handleReaction = (
         break;
       }
       case 'deny': {
-        denySubmission(reaction)
+        denySubmission(reaction);
         break;
       }
       case 'accept_bug': {
