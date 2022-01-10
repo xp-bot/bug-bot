@@ -6,6 +6,7 @@ import {
 } from 'discord.js';
 import localSave from '../localsave.json';
 import { closeTicket, openTicket } from '../systems/TicketHandler';
+import { acceptBug, acceptSuggestion } from '../systems/SubmissionHandler';
 
 export const handleReaction = (
   reaction: MessageReaction | PartialMessageReaction,
@@ -34,11 +35,11 @@ export const handleReaction = (
         break;
       }
       case 'accept_bug': {
-        //acceptBug()
+        acceptBug(reaction).then(() => {});
         break;
       }
       case 'accept_suggestion': {
-        //acceptSuggestion()
+        acceptSuggestion(reaction).then(() => {});
         break;
       }
       case 'inc_auto_score': {
