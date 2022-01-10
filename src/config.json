@@ -1,26 +1,27 @@
 {
-  "token": "OTE3NDMxOTQxNDQ2MzgxNTc4.Ya4nEw.mJBpJKnmbBGgcbD8lzOyVy_Q2w8",
-  "devRole": "",
-  "supportRole": "706934414357168218",
-  "prefix": "?",
-  "channels": {
-    "suggestions": {
-      "channel": "",
-      "column": 0
+    "token": "OTE3NDMxOTQxNDQ2MzgxNTc4.Ya4nEw.mJBpJKnmbBGgcbD8lzOyVy_Q2w8",
+    "devRole": "",
+    "supportRole": "706934414357168218",
+    "prefix": "?",
+    "channels": {
+        "suggestions": {
+            "channel": "",
+            "column": 0
+        },
+        "bugreports": {
+            "channel": "",
+            "column": 0
+        }
     },
-    "bugreports": {
-      "channel": "",
-      "column": 0
+    "ticket": {
+        "category": "927934640818376745",
+        "archive": "930062962742415411"
+    },
+    "autoSupport": [],
+    "aliases": {
+        "265849018662387712": "yuki",
+        "524860237979582464": "conny",
+        "650755708857483344": "haxnts",
+        "414755070161453076": "414755070161453076"
     }
-  },
-  "ticket": {
-    "category": "927934640818376745",
-    "archive": "927934640818376745"
-  },
-  "checkedMessages": [
-    "",
-    "",
-    ""
-  ],
-  "autoSupport": []
 }

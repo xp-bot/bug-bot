@@ -1,6 +1,6 @@
 import {MessageReaction, PartialMessageReaction, PartialUser, User} from "discord.js";
 import localSave from '../localsave.json';
-import {openTicket} from "../systems/TicketHandler";
+import {closeTicket, openTicket} from "../systems/TicketHandler";
 
 export const handleReaction = (reaction: MessageReaction | PartialMessageReaction, user: User | PartialUser) => {
     console.log(`[Bug Bot] Found incoming Reaction Data`)
@@ -16,7 +16,7 @@ export const handleReaction = (reaction: MessageReaction | PartialMessageReactio
                 break
             }
             case "close_ticket": {
-                //closeTicket()
+                closeTicket(user, reaction)
                 break
             }
             case "deny": {

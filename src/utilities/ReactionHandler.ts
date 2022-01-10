@@ -8,3 +8,8 @@ export const registerReaction = (data: any, options?: Object) => {
     }
     writeJSON(localSave)
 }
+
+export const removeReaction = (data: any) => {
+    delete localSave.reactions[`${data.messageId}${data.emojiId}`]
+    writeJSON(localSave)
+}
