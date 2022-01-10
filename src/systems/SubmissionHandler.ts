@@ -48,6 +48,11 @@ export const acceptBug = async (
 
     removeReaction({
         messageId: reaction.message.id,
+        emojiId: '🔻'
+    })
+
+    removeReaction({
+        messageId: reaction.message.id,
         emojiId: reaction.emoji.id || reaction.emoji
     });
 
@@ -87,7 +92,7 @@ export const acceptSuggestion = async (
             const column = config.channels.suggestions.column;
 
             const message = `*Creator: ${reaction.message.author?.tag}\n${id}*\n\n${reaction.message.content}`;
-            // octoClient.rest.projects.createCard({ note: message, column_id: column });
+            octoClient.rest.projects.createCard({ note: message, column_id: column });
 
             reaction.message.react("<:xp_check:818532849564909658>");
         });
