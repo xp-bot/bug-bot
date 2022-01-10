@@ -9,7 +9,7 @@ import {
 } from "discord.js";
 import localSave from "../localsave.json";
 import config from "../config.json";
-import {registerReaction, removeReaction} from "../utilities/ReactionHandler";
+import {registerReaction, removeReaction} from "./ReactionHandler";
 import {writeJSON} from "../utilities/IOJSON";
 
 export const openTicket = (user: User | PartialUser, reaction: MessageReaction | PartialMessageReaction) => {
