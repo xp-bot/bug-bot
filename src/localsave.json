@@ -1,0 +1,19 @@
+{
+    "reactions": {
+        "930034395967025152792577321109422111": {
+            "intent": "open_ticket"
+        },
+        "930054680086716436🔒": {
+            "intent": "close_ticket"
+        },
+        "930055839484624936🔒": {
+            "intent": "close_ticket"
+        },
+        "930055889065488425🔒": {
+            "intent": "close_ticket"
+        }
+    },
+    "ticket": {
+        "count": 2
+    }
+}
