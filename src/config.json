@@ -1,0 +1,28 @@
+{
+  "token": "OTE3NDMxOTQxNDQ2MzgxNTc4.Ya4nEw.mJBpJKnmbBGgcbD8lzOyVy_Q2w8",
+  "githubAuth": "fb501930cbb002f000357c2efa52a2a221686b25",
+  "devRole": "706934414357168218",
+  "supportRole": "930114267770941470",
+  "prefix": "!",
+  "channels": {
+    "suggestions": {
+      "channel": "930072847982927935",
+      "column": 12710059
+    },
+    "bugreports": {
+      "channel": "930072784829313034",
+      "column": 12709996
+    }
+  },
+  "ticket": {
+    "category": "927934640818376745",
+    "archive": "930062962742415411"
+  },
+  "autoSupport": [],
+  "aliases": {
+    "265849018662387712": "yuki",
+    "524860237979582464": "conny",
+    "650755708857483344": "haxnts",
+    "414755070161453076": "nils"
+  }
+}
