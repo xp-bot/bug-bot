@@ -9,7 +9,9 @@ export const cmdHelp = async (message: Message | PartialMessage) => {
         {
           title: `Command Help`,
           description: `\`info\`\n> Leave a note for tickets\n
-                                    \`close (@user)\`\n> Send a reminder to close the ticket`,
+                                    \`close (@user)\`\n> Send a reminder to close the ticket\n
+                                    \`delete\`\n> Delete the current ticket archive\n
+                                    \`faq <topic>\`\n> Quickly send faqs`,
           footer: {
             iconURL:
               message.author?.avatarURL() || message.author?.defaultAvatarURL,

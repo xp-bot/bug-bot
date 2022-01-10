@@ -3,6 +3,8 @@ import config from '../config.json';
 import { cmdClose } from '../commands/CmdClose';
 import { cmdInfo } from '../commands/CmdInfo';
 import { cmdHelp } from '../commands/CmdHelp';
+import { cmdDelete } from '../commands/CmdDelete';
+import { cmdFaq } from '../commands/CmdFaq';
 
 export const handleCommand = async (message: Message | PartialMessage) => {
   const cont = message.content;
@@ -16,6 +18,14 @@ export const handleCommand = async (message: Message | PartialMessage) => {
       }
       case 'info': {
         await cmdInfo(message, cont);
+        break;
+      }
+      case 'delete': {
+        await cmdDelete(message);
+        break;
+      }
+      case 'faq': {
+        await cmdFaq(message, args);
         break;
       }
       case 'help': {
