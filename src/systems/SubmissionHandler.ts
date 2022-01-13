@@ -50,7 +50,7 @@ export const acceptBug = async (
   reaction: MessageReaction | PartialMessageReaction
 ) => {
   await reaction.message.fetch();
-  
+
   if (reaction.message.member?.roles.cache.has(config.devRole)) {
 
     removeReaction({
