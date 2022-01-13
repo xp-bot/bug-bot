@@ -50,18 +50,19 @@ export const acceptBug = async (
   reaction: MessageReaction | PartialMessageReaction
 ) => {
   await reaction.message.fetch();
-
-  removeReaction({
-    messageId: reaction.message.id,
-    emojiId: '🔻'
-  });
-
-  removeReaction({
-    messageId: reaction.message.id,
-    emojiId: reaction.emoji.id || reaction.emoji
-  });
-
+  
   if (reaction.message.member?.roles.cache.has(config.devRole)) {
+
+    removeReaction({
+      messageId: reaction.message.id,
+      emojiId: '🔻'
+    });
+
+    removeReaction({
+      messageId: reaction.message.id,
+      emojiId: reaction.emoji.id || reaction.emoji
+    });
+
     reaction.message.reactions.removeAll().then(() => {
       const id = `BugID: \`ba-${randomIntFromInterval(10000, 99999)}\``;
       const column = config.channels.bugreports.column;
@@ -79,17 +80,18 @@ export const acceptSuggestion = async (
 ) => {
   await reaction.message.fetch();
 
-  removeReaction({
-    messageId: reaction.message.id,
-    emojiId: '🔻'
-  });
-
-  removeReaction({
-    messageId: reaction.message.id,
-    emojiId: reaction.emoji.id || reaction.emoji
-  });
-
   if (reaction.message.member?.roles.cache.has(config.devRole)) {
+
+    removeReaction({
+      messageId: reaction.message.id,
+      emojiId: '🔻'
+    });
+
+    removeReaction({
+      messageId: reaction.message.id,
+      emojiId: reaction.emoji.id || reaction.emoji
+    });
+
     reaction.message.reactions.removeAll().then(() => {
       const id = `SuggestionID: \`sa-${randomIntFromInterval(10000, 99999)}\``;
       const column = config.channels.suggestions.column;
@@ -102,20 +104,27 @@ export const acceptSuggestion = async (
   }
 };
 
-export const denySubmission = (
+export const denySubmission = async (
   reaction: MessageReaction | PartialMessageReaction
 ) => {
-  removeReaction({
-    messageId: reaction.message.id,
-    emojiId: '818532849560846379'
-  });
 
-  removeReaction({
-    messageId: reaction.message.id,
-    emojiId: reaction.emoji.id || reaction.emoji
-  });
+  await reaction.message.fetch();
 
-  reaction.message.reactions.removeAll().then(() => {
-    reaction.message.react('<:xp_cross:818532849690083339>');
-  });
+  if (reaction.message.member?.roles.cache.has(config.devRole)) {
+
+    removeReaction({
+      messageId: reaction.message.id,
+      emojiId: '818532849560846379'
+    });
+
+    removeReaction({
+      messageId: reaction.message.id,
+      emojiId: reaction.emoji.id || reaction.emoji
+    });
+
+    reaction.message.reactions.removeAll().then(() => {
+      reaction.message.react('<:xp_cross:818532849690083339>');
+    });
+  }
+
 };
