@@ -14,7 +14,7 @@ export const cmdFaq = async (message: Message | PartialMessage, args: any) => {
     }
     case 'srr': {
       embed = {
-        title: 'How do I make it so only the highest levelrole gets applied?',
+        title: 'How do I make it so only the highest level  role gets applied?',
         description:
           'Enable the SingleRankRole module.\n' +
           '> `.xp module switch singlerankrole`',
