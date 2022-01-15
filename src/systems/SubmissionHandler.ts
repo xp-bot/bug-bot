@@ -49,9 +49,10 @@ export const initSubmission = async (message: Message | PartialMessage) => {
 export const acceptBug = async (
   reaction: MessageReaction | PartialMessageReaction
 ) => {
-  await reaction.message.fetch();
-
-  if (reaction.message.member?.roles.cache.has(config.devRole)) {
+  const msg: Message = await reaction.message.fetch();
+  const mem = await msg.member?.fetch();
+  console.log(mem);
+  if (mem?.roles.cache.has(config.devRole)) {
 
     removeReaction({
       messageId: reaction.message.id,

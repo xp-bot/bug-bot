@@ -35,7 +35,7 @@ export const handleReaction = (
         break;
       }
       case 'deny': {
-        denySubmission(reaction);
+        denySubmission(reaction).then(() => {});
         break;
       }
       case 'accept_bug': {

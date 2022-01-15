@@ -5,6 +5,7 @@ import { cmdInfo } from '../commands/CmdInfo';
 import { cmdHelp } from '../commands/CmdHelp';
 import { cmdDelete } from '../commands/CmdDelete';
 import { cmdFaq } from '../commands/CmdFaq';
+import { cmdDebug } from "../commands/CmdDebug";
 
 export const handleCommand = async (message: Message | PartialMessage) => {
   const cont = message.content;
@@ -31,6 +32,10 @@ export const handleCommand = async (message: Message | PartialMessage) => {
       case 'help': {
         await cmdHelp(message);
         break;
+      }
+      case 'debug': {
+        await cmdDebug(message);
+        break
       }
     }
   }
