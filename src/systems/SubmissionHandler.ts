@@ -1,13 +1,8 @@
-import {
-  Message,
-  MessageReaction,
-  PartialMessage,
-  PartialMessageReaction
-} from 'discord.js';
-import config from '../config.json';
-import { registerReaction, removeReaction } from './ReactionHandler';
-import { Octokit } from '@octokit/rest';
-import { randomIntFromInterval } from '../utilities/Misc';
+import { Message, MessageReaction, PartialMessage, PartialMessageReaction, PartialUser, User } from "discord.js";
+import config from "../config.json";
+import { registerReaction, removeReaction } from "./ReactionHandler";
+import { Octokit } from "@octokit/rest";
+import { randomIntFromInterval } from "../utilities/Misc";
 
 const octoClient = new Octokit({ auth: config.githubAuth });
 
@@ -36,7 +31,7 @@ export const initSubmission = async (message: Message | PartialMessage) => {
         intent: `accept_${type}`
       });
     });
-    message.react('🔻').then((msg) => {
+    message.react('<:g_down:935116331030822942>').then((msg) => {
       registerReaction({
         messageId: message.id,
         emojiId: msg.emoji.id || msg.emoji,
@@ -47,16 +42,17 @@ export const initSubmission = async (message: Message | PartialMessage) => {
 };
 
 export const acceptBug = async (
-  reaction: MessageReaction | PartialMessageReaction
+    user: User | PartialUser,
+    reaction: MessageReaction | PartialMessageReaction
 ) => {
-  const msg: Message = await reaction.message.fetch();
-  const mem = await msg.member?.fetch();
-  console.log(mem);
-  if (mem?.roles.cache.has(config.devRole)) {
+  await reaction.message.fetch();
+  const member = await reaction.message.guild?.members.cache.get(user.id)
+
+  if (member?.roles.cache.has(config.devRole)) {
 
     removeReaction({
       messageId: reaction.message.id,
-      emojiId: '🔻'
+      emojiId: '935116331030822942'
     });
 
     removeReaction({
@@ -77,15 +73,17 @@ export const acceptBug = async (
 };
 
 export const acceptSuggestion = async (
-  reaction: MessageReaction | PartialMessageReaction
+    user: User | PartialUser,
+    reaction: MessageReaction | PartialMessageReaction
 ) => {
   await reaction.message.fetch();
+  const member = await reaction.message.guild?.members.cache.get(user.id)
 
-  if (reaction.message.member?.roles.cache.has(config.devRole)) {
+  if (member?.roles.cache.has(config.devRole)) {
 
     removeReaction({
       messageId: reaction.message.id,
-      emojiId: '🔻'
+      emojiId: '935116331030822942'
     });
 
     removeReaction({
@@ -106,12 +104,13 @@ export const acceptSuggestion = async (
 };
 
 export const denySubmission = async (
-  reaction: MessageReaction | PartialMessageReaction
+    user: User | PartialUser,
+    reaction: MessageReaction | PartialMessageReaction
 ) => {
-
   await reaction.message.fetch();
+  const member = await reaction.message.guild?.members.cache.get(user.id)
 
-  if (reaction.message.member?.roles.cache.has(config.devRole)) {
+  if (member?.roles.cache.has(config.devRole)) {
 
     removeReaction({
       messageId: reaction.message.id,

@@ -35,15 +35,15 @@ export const handleReaction = (
         break;
       }
       case 'deny': {
-        denySubmission(reaction).then(() => {});
+        denySubmission(user, reaction).then(() => {});
         break;
       }
       case 'accept_bug': {
-        acceptBug(reaction).then(() => {});
+        acceptBug(user, reaction).then(() => {});
         break;
       }
       case 'accept_suggestion': {
-        acceptSuggestion(reaction).then(() => {});
+        acceptSuggestion(user, reaction).then(() => {});
         break;
       }
       case 'inc_auto_score': {
