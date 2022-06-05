@@ -1,24 +1,13 @@
 {
-  "token": "OTE3NDMxOTQxNDQ2MzgxNTc4.Ya4nEw.mJBpJKnmbBGgcbD8lzOyVy_Q2w8",
-  "githubAuth": "fb501930cbb002f000357c2efa52a2a221686b25",
+  "token-": "OTE3NDMxOTQxNDQ2MzgxNTc4.Ya4nEw.mJBpJKnmbBGgcbD8lzOyVy_Q2w8",
+  "token": "Nzk1Nzg5NTA0MTg2MTU1MDU4.X_Oeug.JwAW2e6QoZRfybs919mLL2q8HE4",
+  "guild-": "707242215579189279",
+  "guild": "506093245256957953",
+  "githubAuth": "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",
   "devRole": "706934414357168218",
-  "supportRole": "930114267770941470",
-  "prefix": "!",
-  "channels": {
-    "suggestions": {
-      "channel": "930072847982927935",
-      "column": 12710059
-    },
-    "bugreports": {
-      "channel": "930072784829313034",
-      "column": 12709996
-    }
-  },
-  "ticket": {
-    "category": "927934640818376745",
-    "archive": "930062962742415411"
-  },
-  "autoSupport": [],
+  "supportRole": "982876043922800661",
+  "archiveCategory": "982917649778491402",
+  "ticketCategory": "927934640818376745",
   "aliases": {
     "265849018662387712": "yuki",
     "524860237979582464": "conny",
