@@ -4,14 +4,18 @@ import {
   CommandInteraction,
   GuildMemberRoleManager,
   Interaction,
+  MessageActionRow,
+  MessageButton,
   MessageEmbed
 } from 'discord.js';
+import { backupSetupFile } from '../utilities/uSetup';
 
-export default async function openTickerListener(
+export default async function openTicketListener(
   interaction: ButtonInteraction
 ) {
-  const count = 432 + 1;
-  let num = `${count}`;
+  setup.ticketCount++;
+  backupSetupFile();
+  let num = `${setup.ticketCount}`;
   while (num.length < 4) {
     num = `0${num}`;
   }
@@ -28,6 +32,10 @@ export default async function openTickerListener(
         {
           id: config.supportRole,
           allow: ['SEND_MESSAGES', `VIEW_CHANNEL`]
+        },
+        {
+          id: `707242215579189279`,
+          deny: ['SEND_MESSAGES', `VIEW_CHANNEL`]
         }
       ]
     })
@@ -40,6 +48,15 @@ export default async function openTickerListener(
               `\nSupport will be with you shortly.\n**Please use this time to describe your issue as detailed as possible.**\n\nHave a nice day! <:xpfeaturesmith:851213538440904755>`
             )
             .setColor(`#52D94F`)
+        ],
+        components: [
+          new MessageActionRow().addComponents(
+            new MessageButton()
+              .setCustomId('closeTicket')
+              .setLabel('Close the Ticket')
+              .setStyle('SUCCESS')
+              .setEmoji(`🔒`)
+          )
         ],
         content: `Welcome ${interaction.user} | <@&${config.supportRole}>`
       });

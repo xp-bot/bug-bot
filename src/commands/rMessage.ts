@@ -16,14 +16,12 @@ module.exports = {
   execute
 };
 async function execute(interaction: CommandInteraction) {
-  
-  interaction.reply({
+  interaction.reply({ ephemeral: true, content: `Created Message!` });
+  interaction.channel?.send({
     embeds: [
       new MessageEmbed()
         .setTitle(`Official XP Support`)
-        .setDescription(
-          `We are here to help!`
-        )
+        .setDescription(`We are here to help!`)
         .setColor(`#52D94F`)
     ],
     components: [
@@ -34,7 +32,6 @@ async function execute(interaction: CommandInteraction) {
           .setStyle('SUCCESS')
           .setEmoji(`<:xp_check:818532849564909658>`)
       )
-    ],
-    fetchReply: true
+    ]
   });
 }

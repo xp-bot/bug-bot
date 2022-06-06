@@ -5,7 +5,10 @@ import { CommandInterface } from './interfaces/internalInterfaces';
 import { readyListener } from './listeners/readyListener';
 import winston, { format, transports } from 'winston';
 import commandsListener from './listeners/commandsListener';
-import openTickerListener from './listeners/openTicketListener';
+import openTicketListener from './listeners/openTicketListener';
+import closeTicketListener from './listeners/closeTicketListener';
+import bugAssigner from './handlers/bugHandler';
+import ticketHandler from './handlers/ticketHandler';
 
 declare global {
   var botClient: Client;
@@ -16,8 +19,9 @@ declare global {
 }
 
 global.config = c;
+global.setup = s;
 global.botClient = new Client({
-  intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MEMBERS]
+  intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MEMBERS, Intents.FLAGS.GUILD_MESSAGES, Intents.FLAGS.GUILD_MESSAGE_REACTIONS]
 });
 
 global.logger = winston.createLogger({
@@ -25,17 +29,17 @@ global.logger = winston.createLogger({
   format: format.combine(format.timestamp(), format.json()),
   transports: [
     new winston.transports.File({ filename: 'error.log', level: 'error' }),
-    new winston.transports.File({ filename: 'out.log' })
+    new winston.transports.File({ filename: 'out.log' }),
   ]
 });
 
-if (process.env.NODE_ENV !== 'production') {
+// if (process.env.NODE_ENV !== 'production') {
   logger.add(
     new transports.Console({
-      format: format.combine(format.colorize(), format.simple())
+      format: format.combine(format.colorize(), format.simple()),
     })
   );
-}
+// }
 
 process
   .on('unhandledRejection', (reason, p) => {
@@ -48,6 +52,8 @@ process
 
 botClient.once('ready', async () => {
   readyListener();
+  bugAssigner();
+  ticketHandler();
 });
 
 botClient.on('interactionCreate', async (interaction) => {
@@ -58,9 +64,14 @@ botClient.on('interactionCreate', async (interaction) => {
 
 botClient.on('interactionCreate', async (interaction) => {
   if (!interaction.isButton() || interaction.user.bot) return;
-  console.log(interaction.customId);
-  
-  if (interaction.customId === `openTicket`) openTickerListener(interaction);
+  switch (interaction.customId) {
+    case `openTicket`:
+      openTicketListener(interaction);
+      break;
+    case `closeTicket`:
+      closeTicketListener(interaction);
+      break;
+  }
 });
 
 botClient.login(config.token);

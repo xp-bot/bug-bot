@@ -1,5 +1,5 @@
 {
-  "token-": "OTE3NDMxOTQxNDQ2MzgxNTc4.Ya4nEw.mJBpJKnmbBGgcbD8lzOyVy_Q2w8",
+  "token-": "NzkzNjQ3OTM0MDg0MDg3ODA4.X-vUPA.QEq3Km3iM8e1gB9_1qnuJUH-TQs",
   "token": "Nzk1Nzg5NTA0MTg2MTU1MDU4.X_Oeug.JwAW2e6QoZRfybs919mLL2q8HE4",
   "guild-": "707242215579189279",
   "guild": "506093245256957953",
@@ -8,6 +8,16 @@
   "supportRole": "982876043922800661",
   "archiveCategory": "982917649778491402",
   "ticketCategory": "927934640818376745",
+  "channels": {
+      "suggestions": {
+          "channel": "930072847982927935",
+          "column": 12710059
+      },
+      "bugreports": {
+          "channel": "930072784829313034",
+          "column": 12709996
+      }
+  },
   "aliases": {
     "265849018662387712": "yuki",
     "524860237979582464": "conny",

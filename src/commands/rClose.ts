@@ -30,7 +30,9 @@ async function execute(interaction: CommandInteraction) {
   let ticketUser =
     messages?.last()?.mentions.users.first() ||
     interaction.options.getUser(`user`);
-  const message = await interaction.reply({
+    
+  interaction.reply({ ephemeral: true, content: `Sent Close Prompt!` });
+  const message = await interaction.channel.send({
     content: ticketUser ? `${ticketUser}` : undefined,
     embeds: [
       new MessageEmbed()
@@ -44,21 +46,18 @@ async function execute(interaction: CommandInteraction) {
     components: [
       new MessageActionRow().addComponents(
         new MessageButton()
-          .setCustomId('close')
+          .setCustomId('closeTicket')
           .setLabel('Close the Ticket')
           .setStyle('SUCCESS')
           .setEmoji(`🔒`)
       )
-    ],
-    fetchReply: true
+    ]
   });
 
   const filter: any = (i: MessageComponentInteraction) =>
-    i.customId === `close`;
+    i.customId === `closeTicket`;
 
-  const collector = (
-    message as Message<boolean>
-  ).createMessageComponentCollector({ filter: filter, max: 1 });
+  const collector = message.createMessageComponentCollector({ filter: filter, max: 1 });
 
   collector.on(`collect`, (i) => {
     interaction
@@ -66,32 +65,5 @@ async function execute(interaction: CommandInteraction) {
         components: []
       })
       .catch((err) => {});
-
-    i.reply({
-      embeds: [
-        new MessageEmbed()
-          .setTitle(`Ticket closed`)
-          .setDescription(`${i.user} closed the Ticket!`)
-          .setColor(`#52D94F`)
-      ]
-    }).catch((err) => {});
-    if (interaction.channel?.type === `GUILD_TEXT`) {
-      interaction.channel.setParent(config.archiveCategory, {
-        lockPermissions: false
-      });
-      interaction.channel.permissionOverwrites.set([
-        {
-          id: ticketUser?.id || ``,
-          deny: ['SEND_MESSAGES', `VIEW_CHANNEL`]
-        },
-        {
-          id: config.supportRole,
-          allow: ['SEND_MESSAGES', `VIEW_CHANNEL`]
-        }
-      ]);
-      interaction.channel.setName(
-        interaction.channel.name.replace(`ticket-`, `closed-`)
-      );
-    }
   });
 }

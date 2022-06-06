@@ -6,7 +6,6 @@ import {
   MessageEmbed
 } from 'discord.js';
 const slash: SlashCommandBuilder | any = new SlashCommandBuilder()
-  .setDefaultMemberPermissions(0)
   .setName(`faq`)
   .addStringOption((o) =>
     o
@@ -71,7 +70,7 @@ async function execute(interaction: CommandInteraction) {
       embed
         .setTitle(`Let's get you started!`)
         .setDescription(
-          'We are more that happy to help!\n\n- Official Tickts: <#853977048698454027>\n- Community Support: <#925932760936370197>'
+          'We are more that happy to help!\n\n- Official Tickets: <#853977048698454027>\n- Community Support: <#925932760936370197>'
         );
       break;
     default:
