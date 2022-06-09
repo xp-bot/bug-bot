@@ -14,7 +14,7 @@ import { backupSetupFile } from '../utilities/uSetup';
 export default async function openTicketListener(
   interaction: ButtonInteraction
 ) {
-  await sendTrackingData({})
+  await sendTrackingData({"type": "server/ticket"});
 
   setup.ticketCount++;
   backupSetupFile();
