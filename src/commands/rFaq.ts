@@ -43,8 +43,8 @@ async function execute(interaction: CommandInteraction) {
       embed
         .setTitle("How do I add the level to someone's nickname?")
         .setDescription(
-          'Enable the Autonick module.\n' + '> `.xp module switch autonick`'
-        );
+          'Enable the Autonick module in the Dashboard.\> https://xp-bot.net/me/servers'
+        ).setImage(`https://img.namespace.media/images/msedge_T5LelagevY.png`);
       break;
     }
     case 'srr': {
@@ -53,17 +53,8 @@ async function execute(interaction: CommandInteraction) {
           'How do I make it so only the highest level role gets applied?'
         )
         .setDescription(
-          'Enable the SingleRankRole module.\n' +
-            '> `.xp module switch singlerankrole`'
-        );
-      break;
-    }
-    case 'dashboard': {
-      embed
-        .setTitle('How do I access the dashboard?')
-        .setDescription(
-          'Go to [xp-bot.net](https://xp-bot.net) and log in. Server Settings are currently restricted to premium subscribers due to the dashboard being in a public testing beta. If you want early access to the dashboard, [support us here](https://premium.xp-bot.net).'
-        );
+          'Enable the Single Rank Role module in the Dashboard.\> https://xp-bot.net/me/servers'
+        ).setImage(`https://img.namespace.media/images/msedge_8Kde3e38bc.png`);
       break;
     }
     case 'other':
