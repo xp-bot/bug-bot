@@ -8,11 +8,14 @@ import {
   MessageButton,
   MessageEmbed
 } from 'discord.js';
+import { sendTrackingData } from '../utilities/ilumRequests';
 import { backupSetupFile } from '../utilities/uSetup';
 
 export default async function openTicketListener(
   interaction: ButtonInteraction
 ) {
+  await sendTrackingData({})
+
   setup.ticketCount++;
   backupSetupFile();
   let num = `${setup.ticketCount}`;

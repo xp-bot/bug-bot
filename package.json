@@ -27,6 +27,7 @@
     "@discordjs/builders": "^0.14.0",
     "@discordjs/rest": "^0.2.0-canary.0",
     "@octokit/rest": "^18.12.0",
+    "axios": "^0.27.2",
     "discord-api-types": "^0.33.3",
     "discord.js": "^13.7.0",
     "octonode": "^0.10.2",
