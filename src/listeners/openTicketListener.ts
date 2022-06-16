@@ -18,21 +18,31 @@ import { backupSetupFile } from '../utilities/uSetup';
 export async function openTicketButtonListener(interaction: ButtonInteraction) {
   await sendTrackingData({ type: 'server/ticket' });
 
+  interaction.channel?.type
+
   const modal = new Modal()
     .setCustomId('openTicketModal')
     .setTitle('Tell us, whats the issue?');
 
   const problemOrigin = new TextInputComponent()
     .setCustomId('ticketModalProblemOrigin')
-    .setLabel('What do you have problems with?')
-    .setPlaceholder(`Commands / Dashboard / Setup / something else`)
+    .setLabel('What service do you have issues with?')
+    .setPlaceholder(`Bot / Dashboard / Setup / ...`)
     .setRequired(true)
     .setMaxLength(15)
-    .setMinLength(5)
+    .setMinLength(2)
     .setStyle('SHORT');
-  const probleDetails = new TextInputComponent()
+  const problemID = new TextInputComponent()
+    .setCustomId('ticketModalProblemID')
+    .setLabel('Please provide the ID of the affected Server.')
+    .setPlaceholder(`830251635490564524`)
+    .setMaxLength(18)
+    .setMinLength(17)
+    .setRequired(false)
+    .setStyle('SHORT');
+  const problemDetails = new TextInputComponent()
     .setCustomId('ticketModalProblemDetails')
-    .setLabel('Describe the problem as detailed as possible.')
+    .setLabel('Describe your issue as detailed as possible.')
     .setPlaceholder(`My problem is...`)
     .setRequired(true)
     .setMaxLength(1000)
@@ -48,20 +58,21 @@ export async function openTicketButtonListener(interaction: ButtonInteraction) {
     .setRequired(false)
     .setStyle('PARAGRAPH');
 
-  const firstActionRow = new MessageActionRow().addComponents(
-    problemOrigin as any
+  const firstActionRow =
+    new MessageActionRow<TextInputComponent>().addComponents(problemOrigin);
+  const idActionRow = new MessageActionRow<TextInputComponent>().addComponents(
+    problemID
   );
-  const secondActionRow = new MessageActionRow().addComponents(
-    probleDetails as any
-  );
-  const thirdActionRow = new MessageActionRow().addComponents(
-    materialLinks as any
-  );
+  const secondActionRow =
+    new MessageActionRow<TextInputComponent>().addComponents(problemDetails);
+  const thirdActionRow =
+    new MessageActionRow<TextInputComponent>().addComponents(materialLinks);
   // Add inputs to the modal
   modal.addComponents(
-    firstActionRow as any,
-    secondActionRow as any,
-    thirdActionRow as any
+    firstActionRow,
+    idActionRow,
+    secondActionRow,
+    thirdActionRow
   );
   // Show the modal to the user
   await interaction.showModal(modal);
@@ -71,11 +82,12 @@ export async function openTicketModalListener(
   interaction: ModalSubmitInteraction
 ) {
   await sendTrackingData({ type: 'server/ticket' });
-  interaction.reply({ephemeral:true, content:`Created Ticket`})
 
   const issueOrigin = interaction.fields.getTextInputValue(
     `ticketModalProblemOrigin`
   );
+  const issueServerID =
+    interaction.fields.getTextInputValue(`ticketModalProblemID`);
   const issueDetails = interaction.fields.getTextInputValue(
     `ticketModalProblemDetails`
   );
@@ -83,26 +95,29 @@ export async function openTicketModalListener(
     `ticketModalProblemMaterial`
   );
 
-
-  const infoEmbed = new MessageEmbed()
-    .setTitle(`User Provided Informaton`)
-    .addField(`Origin of the Issue`, `${issueOrigin || `/`}`, false)
-    .addField(`Issue Details`, `\`\`\`${issueDetails || `/`}\`\`\``, false)
-    .setColor(`#52D94F`);
-
-  if (issueLinks && issueLinks.length > 0)
-    infoEmbed.addField(
-      `Issue Material`,
-      `${issueDetails.split(` `).join(`\n`)}`,
-      false
-    );
-
   setup.ticketCount++;
   backupSetupFile();
   let num = `${setup.ticketCount}`;
   while (num.length < 4) {
     num = `0${num}`;
   }
+
+  const infoEmbed = new MessageEmbed()
+    .setTitle(`Details of Ticket ${num}`)
+    .setDescription(`> ${issueDetails.replace(/\n/gm, `\n> `)}`)
+    .setFooter({
+      text: `Origin of the Issue: ${issueOrigin || `/`} | ServerID: ${
+        issueServerID || `/`
+      }`
+    })
+    .setColor(`#52D94F`);
+  if (issueLinks && issueLinks.length > 0)
+    infoEmbed.addField(
+      `Issue Material`,
+      `${issueLinks.split(` `).join(`\n`)}`,
+      false
+    );
+
   interaction.guild?.channels
     .create(`ticket-${num}`, {
       type: 'GUILD_TEXT',
@@ -118,7 +133,7 @@ export async function openTicketModalListener(
           allow: ['SEND_MESSAGES', `VIEW_CHANNEL`]
         },
         {
-          id: `707242215579189279`,
+          id: interaction.guild.roles.everyone.id,
           deny: ['SEND_MESSAGES', `VIEW_CHANNEL`]
         }
       ]
@@ -127,12 +142,12 @@ export async function openTicketModalListener(
       await channel.send({
         embeds: [
           new MessageEmbed()
-            .setTitle(`Thank you for creating a Ticket`)
+            .setTitle(`Thank you for creating a Ticket!`)
             .setDescription(
-              `\nSupport will be with you shortly.\n\nHave a nice day! <:xpfeaturesmith:851213538440904755>`
+              `We are reviewing your information...\n**The Support Team will be with you shortly.**\n\nHave a nice day! <:xpfeaturesmith:851213538440904755>`
             )
             .setColor(`#52D94F`),
-            infoEmbed
+          infoEmbed
         ],
         components: [
           new MessageActionRow().addComponents(
@@ -143,7 +158,12 @@ export async function openTicketModalListener(
               .setEmoji(`🔒`)
           )
         ],
-        content: `Welcome  | <@&${config.supportRole}>`
+        content: `**Welcome <@${interaction.user.id}>** | <@&${config.supportRole}>`
       });
     });
+
+  interaction.reply({
+    ephemeral: true,
+    content: `Created Ticket \`ticket-${num}\`!`
+  });
 }

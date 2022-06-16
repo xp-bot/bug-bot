@@ -72,7 +72,7 @@ const fetchFiles = async (targetPath: string) => {
         files.push(...childFiles.map((f) => path.join(file, f)));
       }
     } catch (err) {
-      console.error(err);
+      logger.error(err);
     }
   }
 
