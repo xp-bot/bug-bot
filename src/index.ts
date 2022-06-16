@@ -5,10 +5,10 @@ import { CommandInterface } from './interfaces/internalInterfaces';
 import { readyListener } from './listeners/readyListener';
 import winston, { format, transports } from 'winston';
 import commandsListener from './listeners/commandsListener';
-import openTicketListener from './listeners/openTicketListener';
 import closeTicketListener from './listeners/closeTicketListener';
 import bugAssigner from './handlers/bugHandler';
 import ticketHandler from './handlers/ticketHandler';
+import { openTicketButtonListener, openTicketModalListener } from './listeners/openTicketListener';
 
 declare global {
   var botClient: Client;
@@ -66,10 +66,19 @@ botClient.on('interactionCreate', async (interaction) => {
   if (!interaction.isButton() || interaction.user.bot) return;
   switch (interaction.customId) {
     case `openTicket`:
-      openTicketListener(interaction);
+      openTicketButtonListener(interaction);
       break;
     case `closeTicket`:
       closeTicketListener(interaction);
+      break;
+  }
+});
+
+botClient.on('interactionCreate', async (interaction) => {
+  if (!interaction.isModalSubmit() || interaction.user.bot) return;
+  switch (interaction.customId) {
+    case `openTicketModal`:
+      openTicketModalListener(interaction);
       break;
   }
 });
