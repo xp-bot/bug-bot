@@ -30,6 +30,10 @@ const slash: SlashCommandBuilder | any = new SlashCommandBuilder()
           name: `What is the best way to support you guys?`,
           value: `supportus`
         },
+        {
+          name: `My newly created roles are not showing up in the Dashboard!`,
+          value: `rolecache`
+        },
         { name: `other...`, value: `other` }
       )
       .setName(`question`)
@@ -101,9 +105,7 @@ async function execute(interaction: CommandInteraction) {
     }
     case 'supportus': {
       embed
-        .setTitle(
-          'What is the best way to support you guys?'
-        )
+        .setTitle('What is the best way to support you guys?')
         .setDescription(
           'First of all. Thank you!\nEven the smallest financial support moves worlds here.\n\nIf you want to support XP, you have to become a Premium user.\nYou can do this through Patreon and get some benefits that are exclusive to Premium users.'
         )
@@ -123,6 +125,19 @@ async function execute(interaction: CommandInteraction) {
           false
         )
         .setImage(`https://img.namespace.media/images/2021/06/16/bsp3.png`);
+      break;
+    }
+    case 'rolecache': {
+      embed
+        .setTitle(
+          'My newly created roles are not showing up in the Dashboard! Why?'
+        )
+        .setDescription(
+          'XP caches every Server for about 30 minutes for performance reasons. This includes your Roles.\n\n> Wait a maximum of 30 minutes for the roles to show up. ^^'
+        )
+        .setImage(
+          `https://media.discordapp.net/attachments/843951542020472842/1013943399734325328/unknown.png`
+        );
       break;
     }
     case 'other':
