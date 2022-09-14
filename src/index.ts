@@ -52,12 +52,11 @@ process
 
 botClient.once('ready', async () => {
   readyListener();
-  // bugAssigner();
+  bugAssigner();
 });
 
 botClient.on('interactionCreate', async (interaction) => {
   if (
-    interaction.guildId !== `639059687479967787` ||
     !interaction.isCommand() ||
     interaction.user.bot
   )
