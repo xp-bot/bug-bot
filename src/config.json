@@ -9,14 +9,17 @@
   "archiveCategory": "982917649778491402",
   "ticketCategory": "927934640818376745",
   "channels": {
-      "suggestions": {
-          "channel": "930072847982927935",
-          "column": 12710059
-      },
-      "bugreports": {
-          "channel": "930072784829313034",
-          "column": 12709996
-      }
+    "suggestions": {
+      "channel": "930072847982927935",
+      "column": 12710059
+    },
+    "bugreports": {
+      "channel": "930072784829313034",
+      "column": 12709996
+    },
+    "forum": {
+      "channel": "1019647272226652161"
+    }
   },
   "aliases": {
     "265849018662387712": "yuki",
