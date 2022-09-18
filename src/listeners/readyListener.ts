@@ -7,7 +7,7 @@ import { Routes } from 'discord-api-types/v10';
 export async function readyListener() {
   logger.info(`Booted!`);
 
-  // await registerGuildCommands();
+  await registerGuildCommands();
 }
 
 

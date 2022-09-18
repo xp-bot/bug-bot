@@ -1,5 +1,5 @@
 import { SlashCommandBuilder } from '@discordjs/builders';
-import { CommandInteraction } from 'discord.js';
+import { CommandInteraction, MessageEmbed, PermissionString } from 'discord.js';
 import { CommandInterface } from '../interfaces/internalInterfaces';
 const slash: SlashCommandBuilder | any = new SlashCommandBuilder()
   .setName(`status`)
