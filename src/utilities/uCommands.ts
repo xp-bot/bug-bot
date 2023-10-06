@@ -9,7 +9,7 @@ export async function registerGuildCommands() {
   const botCommands: CommandInterface[] = [];
   const commandFiles = await fetchFiles(`./build/commands`);
 
-  if(!botClient.user) {
+  if (!botClient.user) {
     logger.error(`Bot User is null??`)
     return;
   }
@@ -27,16 +27,13 @@ export async function registerGuildCommands() {
 
   global.botCommands = botCommands;
 
-  const rest = new REST({ version: "9" }).setToken(config.token);
+  if (!process.env.TOKEN) process.exit(1);
+
+  const rest = new REST({ version: "9" }).setToken(process.env.TOKEN);
 
   (async () => {
     try {
       logger.info(`Started refreshing application (/) commands.`)
-
-      // await rest.put(Routes.applicationGuildCommands(botClient.user?.id || ``, config.guild), {
-      //   // await rest.put(Routes.applicationCommands(clientId), {
-      //   body: commands,
-      // });
 
       logger.info(`Successfully reloaded application (/) commands.`)
     } catch (error) {

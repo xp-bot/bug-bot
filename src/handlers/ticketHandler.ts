@@ -16,11 +16,12 @@ export default async function ticketHandler() {
     )
       return;
     await message.member?.fetch();
-    if (!message.member?.roles.cache.has(config.supportRole)) return;
+    if (!message.member?.roles.cache.has(process.env.SUPPORT_ROLE || '')) return;
 
     let title = message.channel.name;
-    if ((config.aliases as any)[message.member.id]) {
-      title += `-${(config.aliases as any)[message.member.id]}`;
+    const alias = process.env[`ALIAS_${message.member.id}`]
+    if (alias) {
+      title += `-${alias}`;
     } else {
       title += `-${message.member.user.username}`;
     }

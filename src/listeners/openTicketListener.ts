@@ -11,13 +11,9 @@ import {
   ModalSubmitInteraction,
   TextInputComponent
 } from 'discord.js';
-import { info } from 'winston';
-import { sendTrackingData } from '../utilities/ilumRequests';
 import { backupSetupFile } from '../utilities/uSetup';
 
 export async function openTicketButtonListener(interaction: ButtonInteraction) {
-  await sendTrackingData({ type: 'server/ticket' });
-
   interaction.channel?.type
 
   const modal = new Modal()
@@ -81,7 +77,6 @@ export async function openTicketButtonListener(interaction: ButtonInteraction) {
 export async function openTicketModalListener(
   interaction: ModalSubmitInteraction
 ) {
-  await sendTrackingData({ type: 'server/ticket' });
 
   const issueOrigin = interaction.fields.getTextInputValue(
     `ticketModalProblemOrigin`
@@ -106,9 +101,8 @@ export async function openTicketModalListener(
     .setTitle(`Details of Ticket ${num}`)
     .setDescription(`> ${issueDetails.replace(/\n/gm, `\n> `)}`)
     .setFooter({
-      text: `Origin of the Issue: ${issueOrigin || `/`} | ServerID: ${
-        issueServerID || `/`
-      }`
+      text: `Origin of the Issue: ${issueOrigin || `/`} | ServerID: ${issueServerID || `/`
+        }`
     })
     .setColor(`#52D94F`);
   if (issueLinks && issueLinks.length > 0)
@@ -121,7 +115,7 @@ export async function openTicketModalListener(
   interaction.guild?.channels
     .create(`ticket-${num}`, {
       type: 'GUILD_TEXT',
-      parent: `${config.ticketCategory}`,
+      parent: `${process.env.TICKET_CATEGORY}`,
       reason: `BugBot Ticket System`,
       permissionOverwrites: [
         {
@@ -129,7 +123,7 @@ export async function openTicketModalListener(
           allow: ['SEND_MESSAGES', `VIEW_CHANNEL`]
         },
         {
-          id: config.supportRole,
+          id: process.env.SUPPORT_ROLE || '',
           allow: ['SEND_MESSAGES', `VIEW_CHANNEL`]
         },
         {
@@ -158,7 +152,7 @@ export async function openTicketModalListener(
               .setEmoji(`🔒`)
           )
         ],
-        content: `**Welcome <@${interaction.user.id}>** | <@&${config.supportRole}>`
+        content: `**Welcome <@${interaction.user.id}>** | <@&${process.env.SUPPORT_ROLE}>`
       });
     });
 
