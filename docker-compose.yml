@@ -3,8 +3,6 @@ services:
   xp-connector:
     container_name: xp-bugbot
     image: ghcr.io/xp-bot/xp-bugbot:latest
-    ports:
-      - '3000:3000'
     volumes:
       - ./volumes/xp-bugbot/setup.json:/app/setup.json
     environment:
