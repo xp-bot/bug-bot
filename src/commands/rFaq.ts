@@ -1,11 +1,9 @@
-import { SlashCommandBuilder } from '@discordjs/builders';
 import {
-  CommandInteraction,
-  PermissionString,
-  GuildMemberRoleManager,
-  MessageEmbed
+  ChatInputCommandInteraction,
+  EmbedBuilder,
+  SlashCommandBuilder
 } from 'discord.js';
-const slash: SlashCommandBuilder | any = new SlashCommandBuilder()
+const slash: SlashCommandBuilder = new SlashCommandBuilder()
   .setName(`faq`)
   .addStringOption((o) =>
     o
@@ -46,14 +44,15 @@ module.exports = {
   execute
 };
 
-async function execute(interaction: CommandInteraction) {
+async function execute(interaction: ChatInputCommandInteraction) {
   const option = interaction.options.getString(`question`);
   if (!option) return;
-  const embed = new MessageEmbed()
+  const embed = new EmbedBuilder()
     .setFooter({
       text: `Requested by ${interaction.member?.user.username}`
     })
-    .setColor(`#52D94F`);
+    .setColor(`#52D94F`)
+    
   switch (option) {
     case 'autonick': {
       embed
@@ -109,21 +108,29 @@ async function execute(interaction: CommandInteraction) {
         .setDescription(
           'First of all. Thank you!\nEven the smallest financial support moves worlds here.\n\nIf you want to support XP, you have to become a Premium user.\nYou can do this through Patreon and get some benefits that are exclusive to Premium users.'
         )
-        .addField(
-          `User Premium Benefits`,
-          `**-** Premium Badge on your Ranking Card <:xppremium:851213381611946025>\n**-** You can have bigger Backgrounds and Blur them\n**-** You'll never have to vote again`,
-          false
+        .addFields(
+          {
+            name: `User Premium Benefits`,
+            value: `**-** Premium Badge on your Ranking Card <:xppremium:851213381611946025>\n**-** You can have bigger Backgrounds and Blur them\n**-** You'll never have to vote again`,
+            inline: false
+          },
+
+          {
+            name: `Server Premium Benefits`,
+            value: `**-** All of the above +\n**-** Autonick customization\n**-** Remove reached Levelroles\n**-** Reset left Users\n**-** Use commands in Threads\n**-** Custom Game Cooldowns\n**-** Custom max. Daily XP\n**-** Logs in your Dashboard\n**-** Custom Leaderboard Background\n**-** Dynamic Discord Leaderboard`,
+            inline: false
+          },
+
+          {
+            name: `Become a Premium User`,
+            value: `[Patreon](https://premium.xp-bot.net/)`,
+            inline: false
+          }
+
         )
-        .addField(
-          `Server Premium Benefits`,
-          `**-** All of the above +\n**-** Autonick customization\n**-** Remove reached Levelroles\n**-** Reset left Users\n**-** Use commands in Threads\n**-** Custom Game Cooldowns\n**-** Custom max. Daily XP\n**-** Logs in your Dashboard\n**-** Custom Leaderboard Background\n**-** Dynamic Discord Leaderboard`,
-          false
-        )
-        .addField(
-          `Become a Premium User`,
-          `[Patreon](https://premium.xp-bot.net/)`,
-          false
-        )
+      
+        
+        
         .setImage(`https://img.namespace.media/images/2021/06/16/bsp3.png`);
       break;
     }
