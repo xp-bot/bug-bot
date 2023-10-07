@@ -23,7 +23,7 @@ module.exports = {
   execute
 };
 async function execute(interaction: ChatInputCommandInteraction) {
-  if ((interaction.channel?.type !== ChannelType.GuildText) || (interaction.channel.name.startsWith(`ticket-`))) return;
+  if ((interaction.channel?.type !== ChannelType.GuildText) || (!interaction.channel.name.startsWith(`ticket-`))) return;
   const messages = await interaction.channel?.messages.fetch();
 
   let ticketUser =
