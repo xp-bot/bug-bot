@@ -1,15 +1,14 @@
-import { SlashCommandBuilder } from '@discordjs/builders';
 import {
-  CommandInteraction,
-  PermissionString,
-  GuildMemberRoleManager,
-  MessageEmbed,
-  MessageActionRow,
-  MessageButton,
+  EmbedBuilder,
+  ActionRowBuilder,
   MessageComponentInteraction,
-  Message
+  ChannelType,
+  ButtonBuilder,
+  ButtonStyle,
+  ChatInputCommandInteraction,
+  SlashCommandBuilder
 } from 'discord.js';
-const slash: SlashCommandBuilder | any = new SlashCommandBuilder()
+const slash: SlashCommandBuilder = new SlashCommandBuilder()
   .setDefaultMemberPermissions(0)
   .setName(`close`)
   .addUserOption((o) =>
@@ -23,8 +22,8 @@ module.exports = {
   slash,
   execute
 };
-async function execute(interaction: CommandInteraction) {
-  if (interaction.channel?.type !== `GUILD_TEXT` || !interaction.channel.name.startsWith(`ticket-`)) return;
+async function execute(interaction: ChatInputCommandInteraction) {
+  if ((interaction.channel?.type !== ChannelType.GuildText) || (!interaction.channel.name.startsWith(`ticket-`))) return;
   const messages = await interaction.channel?.messages.fetch();
 
   let ticketUser =
@@ -35,7 +34,7 @@ async function execute(interaction: CommandInteraction) {
   const message = await interaction.channel.send({
     content: ticketUser ? `${ticketUser}` : undefined,
     embeds: [
-      new MessageEmbed()
+      new EmbedBuilder()
         .setTitle(`Hey ${ticketUser ? `${ticketUser.username}` : `👋`}`)
         .setDescription(
           `**Do you still need support?**\nIf so, please explain your problem here as detailed as possible, so that our team can help you quickly and efficiently.`
@@ -44,11 +43,11 @@ async function execute(interaction: CommandInteraction) {
         .setColor(`#52D94F`)
     ],
     components: [
-      new MessageActionRow().addComponents(
-        new MessageButton()
+      new ActionRowBuilder<ButtonBuilder>().addComponents(
+        new ButtonBuilder()
           .setCustomId('closeTicket')
           .setLabel('Close the Ticket')
-          .setStyle('SUCCESS')
+          .setStyle(ButtonStyle.Success)
           .setEmoji(`🔒`)
       )
     ]

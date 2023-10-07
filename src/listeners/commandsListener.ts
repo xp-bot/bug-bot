@@ -1,8 +1,5 @@
 import {
-  CacheType,
   CommandInteraction,
-  GuildMemberRoleManager,
-  Interaction
 } from 'discord.js';
 
 export default async function commandsListener(
