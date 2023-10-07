@@ -1,5 +1,4 @@
-import { SlashCommandBuilder } from '@discordjs/builders';
-import { CommandInteraction, MessageEmbed, PermissionString } from 'discord.js';
+import { ChannelType, ChatInputCommandInteraction, CommandInteraction, EmbedBuilder, SlashCommandBuilder } from 'discord.js';
 import { CommandInterface } from '../interfaces/internalInterfaces';
 const slash: SlashCommandBuilder | any = new SlashCommandBuilder()
   .setDefaultMemberPermissions(0)
@@ -19,9 +18,9 @@ module.exports = {
   slash,
   execute
 };
-async function execute(interaction: CommandInteraction) {
-  if (interaction.channel?.type === `GUILD_PUBLIC_THREAD`) {
-    const embed = new MessageEmbed()
+async function execute(interaction: ChatInputCommandInteraction) {
+  if (interaction.channel?.type === ChannelType.PublicThread) {
+    const embed = new EmbedBuilder()
       .setColor(`#52D94F`)
       .setTitle('This Thread has been closed by a Staff member.');
     const closeReason = interaction.options.getString(`reason`);

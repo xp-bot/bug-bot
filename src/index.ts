@@ -1,4 +1,4 @@
-import { Client, Intents, MessageEmbed } from 'discord.js';
+import { Client, IntentsBitField } from 'discord.js';
 import s from './setup.json';
 import { CommandInterface } from './interfaces/internalInterfaces';
 import { readyListener } from './listeners/readyListener';
@@ -23,10 +23,10 @@ declare global {
 global.setup = s;
 global.botClient = new Client({
     intents: [
-        Intents.FLAGS.GUILDS,
-        Intents.FLAGS.GUILD_MEMBERS,
-        Intents.FLAGS.GUILD_MESSAGES,
-        Intents.FLAGS.GUILD_MESSAGE_REACTIONS
+        IntentsBitField.Flags.Guilds,
+        IntentsBitField.Flags.GuildMembers,
+        IntentsBitField.Flags.GuildMessages,
+        IntentsBitField.Flags.GuildMessageReactions
     ]
 });
 

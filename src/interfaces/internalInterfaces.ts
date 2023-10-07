@@ -1,5 +1,4 @@
-import { SlashCommandBuilder } from '@discordjs/builders';
-import { CommandInteraction, PermissionString, Guild } from 'discord.js';
+import { CommandInteraction, SlashCommandBuilder } from 'discord.js';
 export interface CommandInterface {
   slash: SlashCommandBuilder;
   execute(interaction: CommandInteraction): Promise<void>;

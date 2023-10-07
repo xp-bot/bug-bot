@@ -1,11 +1,12 @@
 import { Octokit } from '@octokit/rest';
+import { ChannelType } from 'discord.js';
 const octokit = new Octokit({
   auth: `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`
 });
 
 export default async function ticketHandler() {
   botClient.on('messageCreate', async (message) => {
-    if (message.member?.user.bot || message.channel.type !== `GUILD_TEXT`)
+    if (message.member?.user.bot || message.channel.type !== ChannelType.GuildText)
       return;
     if (
       message.channel.name.length > 11 ||
