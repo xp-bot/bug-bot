@@ -1,0 +1,42 @@
+{
+  "name": "bugbot",
+  "version": "2.0.0",
+  "description": "Bug Bot rewrite in TypeScript",
+  "main": "src/index.ts",
+  "scripts": {
+    "build": "tsc",
+    "start": "node ./build/index.js",
+    "prod": "npm run build && npm run start",
+    "dev": "ts-node ./src/index.ts"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/xp-bot/BugBot.git"
+  },
+  "author": "angelsflyinhell",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/xp-bot/BugBot/issues"
+  },
+  "homepage": "https://github.com/xp-bot/BugBot#readme",
+  "devDependencies": {
+    "prettier": "^2.5.1",
+    "ts-node": "^10.4.0"
+  },
+  "dependencies": {
+    "@discordjs/builders": "^0.14.0",
+    "@discordjs/rest": "^0.2.0-canary.0",
+    "@octokit/rest": "^18.12.0",
+    "@tensorflow-models/qna": "^1.0.1",
+    "@tensorflow/tfjs": "^3.20.0",
+    "@tensorflow/tfjs-node": "^3.20.0",
+    "axios": "^0.27.2",
+    "discord-api-types": "^0.33.3",
+    "discord.js": "^13.8.0",
+    "dotenv": "^16.3.1",
+    "octonode": "^0.10.2",
+    "rimraf": "^3.0.2",
+    "typescript": "^5.2.2",
+    "winston": "^3.7.2"
+  }
+}
