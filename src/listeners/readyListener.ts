@@ -1,8 +1,7 @@
 import { CommandInterface } from "../interfaces/internalInterfaces";
 import fs from "fs";
-import { REST } from "@discordjs/rest";
 import path from "path";
-import { Routes } from 'discord-api-types/v10';
+import { REST, Routes } from "discord.js";
 
 export async function readyListener() {
   logger.info(`Booted!`);

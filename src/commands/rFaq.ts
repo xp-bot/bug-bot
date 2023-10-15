@@ -117,7 +117,7 @@ async function execute(interaction: ChatInputCommandInteraction) {
 
           {
             name: `Server Premium Benefits`,
-            value: `**-** All of the above +\n**-** Autonick customization\n**-** Remove reached Levelroles\n**-** Reset left Users\n**-** Use commands in Threads\n**-** Custom Game Cooldowns\n**-** Custom max. Daily XP\n**-** Logs in your Dashboard\n**-** Custom Leaderboard Background\n**-** Dynamic Discord Leaderboard`,
+            value: `**-** All of the above +\n**-** Autonick customization\n**-** Remove reached Levelroles\n**-** Reset left Users\n**-** Use commands in Threads\n**-** Custom Game Cooldowns\n**-** Custom max. Daily XP\n**-** Custom Leaderboard Background\n**-** Dynamic Discord Leaderboard`,
             inline: false
           },
 
@@ -151,7 +151,7 @@ async function execute(interaction: ChatInputCommandInteraction) {
       embed
         .setTitle(`Let's get you started!`)
         .setDescription(
-          'We are more that happy to help!\n\n- Official Tickets: <#853977048698454027>\n- Community Support: <#925932760936370197>'
+          'We are more that happy to help!\n\n- Official Tickets: <#853977048698454027>\n- Community Support: <#1047076477671309343>'
         );
       break;
     default:
