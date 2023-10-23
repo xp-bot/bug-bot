@@ -61,13 +61,13 @@ botClient.once('ready', async () => {
     ticketHandler();
 });
 
-botClient.on('threadCreate', async (thread) => {
-    if (thread.parentId === process.env.GET_HELP_FORUM_CHANNEL) {
-        thread.send({
+botClient.on("messageCreate", async (message) => {
+    if ((message.channel.isThread()) && (message.channel.parentId === process.env.GET_HELP_FORUM_CHANNEL) && (message.position === 0) && (!message.author.bot)) {
+        await message.channel.send({
             content: `## Thank you for getting in touch!\n<@&${process.env.SUPPORT_ROLE}> will assist you shortly.\n\n> _To expedite the process, please provide us with the following information:_\n> - Your server ID.\n> - Screenshots illustrating the issue.\n> - A detailed explanation of how you encountered the problem you're currently facing.`
         });
     }
-});
+})
 
 botClient.on('interactionCreate', async (interaction) => {
     if (!interaction.isCommand() || interaction.user.bot) return;
