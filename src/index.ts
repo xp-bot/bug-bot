@@ -1,4 +1,4 @@
-import { ChannelType, Client, IntentsBitField } from 'discord.js';
+import { Client, IntentsBitField } from 'discord.js';
 import s from './setup.json';
 import { CommandInterface } from './interfaces/internalInterfaces';
 import { readyListener } from './listeners/readyListener';
